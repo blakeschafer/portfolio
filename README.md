@@ -1,2 +1,2 @@
-# por
+# portfolio
 My portfolio website, 
