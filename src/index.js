@@ -1,52 +1,44 @@
-$(function(){
+const links = document.querySelectorAll('.link');
+const sections = document.querySelectorAll('section');
 
-    window.sr = ScrollReveal();
-  
-    if ($(window).width() < 768) {
-  
-        if ($('.timeline-content').hasClass('js--fadeInLeft')) {
-            $('.timeline-content').removeClass('js--fadeInLeft').addClass('js--fadeInRight');
+let activeLink = 0;
+
+links.forEach((link, i) => {
+    link.addEventListener('click', () => {
+        if(activeLink != i){
+            links[activeLink].classList.remove('active');
+            link.classList.add('active');
+            sections[activeLink].classList.remove('active');
+
+            setTimeout(() => {
+                activeLink = i;
+                sections[i].classList.add('active');
+            }, 1000);
         }
+    })
+})
+
+
+/*/scss/*/
+
+// http://ahrengot.com/tutorials/greensock-javascript-animation
+
+var $cursor = $('.cursor');
+
+function moveCursor(e) {
+  $cursor.addClass('is-moving');
   
-        sr.reveal('.js--fadeInRight', {
-          origin: 'right',
-          distance: '300px',
-          easing: 'ease-in-out',
-          duration: 800,
-        });
-  
-    } else {
-        
-        sr.reveal('.js--fadeInLeft', {
-          origin: 'left',
-          distance: '300px',
-            easing: 'ease-in-out',
-          duration: 800,
-        });
-  
-        sr.reveal('.js--fadeInRight', {
-          origin: 'right',
-          distance: '300px',
-          easing: 'ease-in-out',
-          duration: 800,
-        });
-  
-    }
-    
-    sr.reveal('.js--fadeInLeft', {
-          origin: 'left',
-          distance: '300px',
-            easing: 'ease-in-out',
-          duration: 800,
-        });
-  
-        sr.reveal('.js--fadeInRight', {
-          origin: 'right',
-          distance: '300px',
-          easing: 'ease-in-out',
-          duration: 800,
-        });
-  
-  
+  TweenLite.to($cursor, 0.23, {
+    left: e.pageX,
+    top: e.pageY,
+    ease: Power4.easOut
   });
   
+  clearTimeout(timer);
+
+   var timer = setTimeout(function() {
+       $cursor.removeClass('is-moving');
+   }, 300);
+}
+
+$(window).on('mousemove', moveCursor);
